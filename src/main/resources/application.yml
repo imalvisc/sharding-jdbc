@@ -1,0 +1,30 @@
+server:
+  port: 8865
+
+spring:
+  application:
+    name: sharding-jdbc
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  #sharding-jdbc配置
+  shardingsphere:
+    datasource:
+      names: gyframework
+      gyframework:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://192.168.1.169:3306/gyframework?useUnicode=true
+        username: root
+        password: 123456
+    sharding:
+      tables:
+        t_order:
+          actualDataNodes: gyframework.t_order_$->{1..3}
+          tableStrategy:
+            inline:
+              shardingColumn: order_id
+              algorithmExpression: t_order_$->{Math.abs(order_id.hashCode() % 3) + 1}
+    props:
+      sql:
+        show: true
