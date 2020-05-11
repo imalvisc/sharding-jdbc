@@ -14,7 +14,7 @@ spring:
       names: sharding-jdbc
       sharding-jdbc:
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://127.0.0.1:3306/sharding-jdbc?useUnicode=true
+        url: jdbc:mysql://192.168.1.169:3306/gyframework?useUnicode=true
         username: root
         password: 123456
     sharding:
@@ -25,6 +25,23 @@ spring:
             inline:
               shardingColumn: order_id
               algorithmExpression: t_order_$->{Math.abs(order_id.hashCode() % 3) + 1}
+      encrypt-rule:
+        encryptors:
+          encryptor_aes:
+            type: aes
+            props:
+              aes.key.value: 123456
+        tables:
+          t_order:
+            columns:
+              user_id:
+                cipherColumn: user_id
+                encryptor: encryptor_aes
+
     props:
       sql:
         show: true
+      query:
+        with:
+          cipher:
+            column: true
