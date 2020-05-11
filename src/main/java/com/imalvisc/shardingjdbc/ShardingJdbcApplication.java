@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 程序启动类
  *
  * @author chenjiaming
- * @version Id: A.java, v 0.1 2020-04-28 12:22 chenjiaming Exp $$
+ * @version Id: ShardingJdbcApplication.java, v 0.1 2020-04-28 12:22 chenjiaming Exp $$
  */
 @SpringBootApplication
 @MapperScan("com.imalvisc.shardingjdbc.mapper")
